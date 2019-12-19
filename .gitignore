@@ -4,6 +4,7 @@
 /storage/*.key
 /vendor
 .idea
+/laradock-data
 .env.backup
 .phpunit.result.cache
 Homestead.json
