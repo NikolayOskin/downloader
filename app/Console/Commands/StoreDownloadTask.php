@@ -54,5 +54,7 @@ class StoreDownloadTask extends Command
 
         $task = DownloadTask::create(['url' => $this->argument('url')]);
         DownloadTaskJob::dispatch($task);
+
+        $this->line('Download task created!');
     }
 }
