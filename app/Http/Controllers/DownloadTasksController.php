@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateDownloadTaskRequest;
-use App\Jobs\ProcessDownloadTask;
+use App\Jobs\DownloadTaskJob;
 use App\Models\DownloadTask;
 use Illuminate\Http\Request;
 
@@ -18,7 +18,7 @@ class DownloadTasksController extends Controller
     public function store(CreateDownloadTaskRequest $request)
     {
         $task = DownloadTask::create($request->validated());
-        ProcessDownloadTask::dispatch($task);
+        DownloadTaskJob::dispatch($task);
 
         return redirect('/');
     }

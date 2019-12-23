@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\ProcessDownloadTask;
+use App\Jobs\DownloadTaskJob;
 use App\Models\DownloadTask;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
@@ -53,6 +53,6 @@ class StoreDownloadTask extends Command
         }
 
         $task = DownloadTask::create(['url' => $this->argument('url')]);
-        ProcessDownloadTask::dispatch($task);
+        DownloadTaskJob::dispatch($task);
     }
 }
