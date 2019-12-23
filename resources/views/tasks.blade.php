@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -11,9 +12,30 @@
           crossorigin="anonymous">
     <title>Tasks</title>
 </head>
+
 <body>
 <div class="container">
-    <h1>Tasks</h1>
+    <h2 class="mt-5">Add task</h2>
+    <form method="post" action="/tasks">
+        @csrf
+        <div class="form-group">
+            <label for="url">Url</label>
+            <input type="text" name="url" class="form-control" id="url" placeholder="Enter url">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li><small>{{ $error }}</small></li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+        </div>
+        <div class="form-group">
+            <button type="submit" name="button" class="btn btn-primary">Add</button>
+        </div>
+    </form>
+    <h2 class="mt-5">Tasks</h2>
     <table class="table table-dark">
         <thead>
         <tr>
@@ -30,7 +52,11 @@
                 <th scope="row">{{$task->id}}</th>
                 <td><span class="small">{{$task->url}}</span></td>
                 <td><span class="badge badge-primary">{{$task->status}}</span></td>
-                <td><span class="badge badge-primary">Download</span></td>
+                <td>
+                    @if ($task->status === 'completed')
+                    <a href="/storage/{{$task->filepath}}"><span class="badge badge-primary">Download</span></a>
+                    @endif
+                </td>
             </tr>
         @empty
             <p>No tasks</p>
@@ -39,10 +65,6 @@
         </tbody>
     </table>
 </div>
-
-<table>
-
-</table>
 
 </body>
 </html>
