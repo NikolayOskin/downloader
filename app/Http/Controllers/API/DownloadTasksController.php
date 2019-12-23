@@ -4,18 +4,22 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateDownloadTaskRequest;
+use App\Jobs\ProcessDownloadTask;
 use App\Models\DownloadTask;
 
 class DownloadTasksController extends Controller
 {
-    /**
-     * @param CreateDownloadTaskRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
+    public function index()
+    {
+        $tasks = DownloadTask::all();
+        return response()->json($tasks, 200);
+    }
+
     public function store(CreateDownloadTaskRequest $request)
     {
         $task = DownloadTask::create($request->validated());
+        ProcessDownloadTask::dispatch($task);
 
-        return response()->json(['success' => $task], 200);
+        return response()->json(['success' => 'Download task added'], 200);
     }
 }
