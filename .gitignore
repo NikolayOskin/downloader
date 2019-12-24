@@ -6,6 +6,7 @@
 .idea
 .env
 /laradock-data
+/laradock
 .env.backup
 .phpunit.result.cache
 Homestead.json
