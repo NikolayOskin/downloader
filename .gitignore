@@ -4,6 +4,7 @@
 /storage/*.key
 /vendor
 .idea
+.env
 /laradock-data
 .env.backup
 .phpunit.result.cache
