@@ -10,6 +10,6 @@ class DownloadTask extends Model
 
     public function getFilepathAttribute($value)
     {
-        return config('app.url') . '/storage/' . $value;
+        return !is_null($value) ? config('app.url') . '/storage/' . $value : $value;
     }
 }
