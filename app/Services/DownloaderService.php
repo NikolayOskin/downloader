@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\DownloadTask;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Support\Facades\Storage;
 
 class DownloaderService
@@ -34,7 +35,7 @@ class DownloaderService
             $task->status = 'completed';
             $task->filepath = $task->id . '/' . $fileName;
             $task->save();
-        } catch (BadResponseException $e) {
+        } catch (ConnectException | BadResponseException $e) {
             Storage::disk('public')->delete($task->id . '/' . $fileName);
             $task->status = 'error';
             $task->save();
@@ -46,8 +47,8 @@ class DownloaderService
         $urlInfo = parse_url($url);
         $extension = isset($urlInfo['path']) ? pathinfo($urlInfo['path'], PATHINFO_EXTENSION) : '';
         $fileName = isset($urlInfo['path']) ? pathinfo($urlInfo['path'], PATHINFO_FILENAME) : '';
-        $extension = $extension === "" ? "html" : $extension;
-        $fileName = $fileName === '' ? 'index' . '.' . $extension : $fileName . '.' . $extension;
+        $extension = $extension === "" ? "txt" : $extension;
+        $fileName = $fileName === '' ? 'response-body' . '.' . $extension : $fileName . '.' . $extension;
 
         return $fileName;
     }
