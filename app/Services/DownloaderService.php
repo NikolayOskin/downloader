@@ -20,9 +20,9 @@ class DownloaderService
         $this->client = $client;
     }
 
-    public function download(string $url, DownloadTask $task)
+    public function download(DownloadTask $task)
     {
-        $fileName = $this->getFileNameFromURL($url);
+        $fileName = $this->getFileNameFromURL($task->url);
         try {
             $task->status = 'downloading';
             $task->save();

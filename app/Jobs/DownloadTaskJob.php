@@ -36,6 +36,6 @@ class DownloadTaskJob implements ShouldQueue
      */
     public function handle(DownloaderService $service)
     {
-        $service->download($this->downloadTask->url, $this->downloadTask);
+        $service->download($this->downloadTask);
     }
 }
