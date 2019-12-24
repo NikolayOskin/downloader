@@ -54,7 +54,7 @@
                 <td><span class="badge badge-primary">{{$task->status}}</span></td>
                 <td>
                     @if ($task->status === 'completed')
-                    <a href="/storage/{{$task->filepath}}"><span class="badge badge-primary">Download</span></a>
+                    <a href="{{$task->filepath}}"><span class="badge badge-primary">Download</span></a>
                     @endif
                 </td>
             </tr>
