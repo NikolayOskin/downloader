@@ -29,7 +29,7 @@ class DownloaderService
             Storage::disk('public')->put($task->id . '/' . $fileName, '');
             $this->client->request(
                 'GET',
-                $url,
+                $task->url,
                 ['sink' => storage_path('app/public/' . $task->id . '/' . $fileName)]
             );
             $task->status = 'completed';
