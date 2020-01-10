@@ -20,7 +20,7 @@ class DownloaderService
         $this->client = $client;
     }
 
-    public function download(DownloadTask $task)
+    public function download(DownloadTask $task) : void
     {
         $fileName = $this->getFileNameFromURL($task->url);
         try {
@@ -30,13 +30,13 @@ class DownloaderService
             $this->client->request(
                 'GET',
                 $task->url,
-                ['sink' => storage_path('app/public/' . $task->id . '/' . $fileName)]
+                ['sink' => public_path('storage/' . $task->id . '/' . $fileName)]
             );
             $task->status = 'completed';
             $task->filepath = $task->id . '/' . $fileName;
             $task->save();
         } catch (ConnectException | BadResponseException $e) {
-            Storage::disk('public')->delete($task->id . '/' . $fileName);
+            Storage::disk('public')->delete($task->id);
             $task->status = 'error';
             $task->save();
         }
